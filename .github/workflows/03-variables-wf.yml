@@ -40,6 +40,7 @@ jobs:
               run: |
                 echo "My user is ${{ vars.MY_USER }}"                
                 echo "My secret is ${{ secrets.MY_PASSWORD }}"  
+                echo "workflow execution notification "
 
 
     # my-variables-job-02:
