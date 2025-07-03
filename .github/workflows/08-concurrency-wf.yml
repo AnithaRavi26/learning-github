@@ -1,0 +1,21 @@
+name: 08 - Concurrency Workflow
+on:
+  push:
+jobs:
+    ConcurrentJob:
+        name: Concurrency Demo Job
+        runs-on: ubuntu-latest
+        concurrency:
+            group: ABCD
+            cancel-in-progress: false
+        steps:
+            - name: Run a multi-line script
+              run: |
+                echo Hello, world!
+                echo This is a multi-line script.
+
+            - name: Run a single-line script
+              run: echo Hello, world! single line
+
+            - name: Run a single-line script
+              run: sleep 600
