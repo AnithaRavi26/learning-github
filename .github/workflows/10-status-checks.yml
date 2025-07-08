@@ -1,0 +1,43 @@
+# failure, success, cancelled, skipped
+name: 10 - Status Checks
+on: [push]
+jobs:
+  status-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Build
+        run: |
+            echo "Running Build..."
+            exit 1
+        continue-on-error: true    
+
+      - name: Generate Error Report
+        if: failure()
+        run: |
+            echo "Running Generate Error Report..."
+
+      - name: Unit Testing
+        run: |
+            echo "Running Unit Testing..."
+
+      - name: Deployment
+        run: |
+            echo "Running Deployment"
+    
+      - name: Generate Final Status Report
+        if: always() 
+        run: |
+            echo "Running Generate Final Status Report..."
+
+      - name: sleep 300
+        if: failure() 
+        run: |
+            echo "Running sleep 300..."    
+            sleep 300
+        timeout-minutes: 1    
+
+      - name: when cancelled
+        if: cancelled()
+        run: |
+            echo "Running when cancelled"

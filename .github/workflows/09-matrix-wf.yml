@@ -1,0 +1,28 @@
+name: 09 - Matrix Workflow
+on:
+  push:
+jobs:
+    my-first-job:
+        strategy:
+            matrix:
+                os: [ubuntu-latest, ubuntu-22.04, ubuntu-18.04]
+                image: [node, python, ruby]
+                include:
+                - os: ubuntu-latest
+                  image: busybox
+                exclude:
+                - os: ubuntu-18.04
+                  image: python
+            max-parallel: 2        
+                  
+        name: job-${{ matrix.os }}-${{ matrix.image }}-${{ matrix.node-version }}
+        runs-on: ${{ matrix.os }}
+        steps:
+            - name: Run a multi-line script
+              run: |
+                echo Hello, world!
+                echo This is a multi-line script.
+
+            - name: Run a single-line script
+              run: echo Hello, world! single line
+    

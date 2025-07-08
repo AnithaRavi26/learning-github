@@ -1,0 +1,55 @@
+name: 07 - Expressions Workflow
+on:
+  push:
+        branches:
+            - main
+            - master
+jobs:
+    main-branch-job:
+        name: 07-expressions-job-on-main-branch
+        runs-on: ubuntu-latest
+        steps:
+            - name: Run a multi-line script
+              run: |
+                echo Hello, world!
+                echo This is a multi-line script.
+
+            - name: Run a single-line script
+              run: echo Hello, world! single line
+            
+            - name: Do not run this
+              if: false
+              run: echo Hello, world! single line
+
+            - name: Expressions
+              run: |
+                echo "1>2 : ${{ 1 > 2}}"
+                echo "1=2 : ${{ 1 == 2}}"
+                echo "1<2 : ${{ 1 < 2}}"
+                echo "true=false : ${{ true == false }}"
+                echo "1<2 and 3>2 : ${{ 1<2 && 3>2}}"
+                echo "abcd=ABCD : ${{ 'abcd' == 'ABCD' }}"
+                echo "contains( 'abcd', 'bc' ) : ${{ contains('abcd', 'bc') }}"
+                echo "startsWith( 'abcd', 'ab' ) : ${{ startsWith('abcd', 'ab') }}"
+
+            - name: Dump job context
+              run: |
+                echo "${{ toJson(job) }}"
+                echo "${{ toJson(github) }}"
+                echo "${{ toJson(env) }}"
+                echo "${{ toJson(secrets) }}"
+                ${{ secrets.}}
+              
+
+    other-branch-job:
+        name: 07-expressions-job-on-other-branch
+        runs-on: ubuntu-latest
+        if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master'
+        steps:
+            - name: Run a multi-line script
+              run: |
+                echo Hello, world!
+                echo This is a multi-line script.
+
+            - name: Run a single-line script
+              run: echo Hello, world! single line
