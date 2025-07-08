@@ -3,7 +3,7 @@ on:
   workflow_run:
     workflows: ["10 - Status Checks"]
     types:
-      - completed
+      - in_progress
 jobs:
   trigger-another-workflow:
     runs-on: ubuntu-latest
