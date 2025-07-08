@@ -1,0 +1,45 @@
+name: 13-passing-values
+on:
+    push:
+jobs:
+    
+  example_job-01:
+    runs-on: ubuntu-latest
+    outputs:
+      example-job-var2: ${{ steps.var2-step.outputs.var2 }}
+    steps:
+
+      - name: Run a one-line script 1
+        run: | 
+            echo "var1=Hello World" >> $GITHUB_ENV
+            echo "${var1}"
+            echo "This is a one-line script in the first step. ${var1}"
+
+      - name: Run env
+        run: | 
+            env
+
+      - name: Run a one-line script 2
+        id: var2-step
+        run: | 
+            echo "var2=GitHub Actions Class" >> $GITHUB_OUTPUT
+            echo "Value of var2 is ${var2}"
+
+      - name: Run a one-line script 3
+        run: | 
+            echo "$var1"
+            echo "Value of var2 is ${{ steps.var2-step.outputs.var2 }}"
+
+
+  example_job-02:
+        runs-on: ubuntu-latest
+        needs: example_job-01
+        steps:
+        - name: Run a one-line script 1
+          run: | 
+                echo "Trying to print ${var1}"
+
+        - name: Run a one-line script 2
+          run: | 
+                echo "Trying to print ${{ needs.example_job-01.outputs.example-job-var2 }}"                
+
