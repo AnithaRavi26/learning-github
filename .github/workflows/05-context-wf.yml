@@ -6,7 +6,7 @@ jobs:
     my-context:
         name: context demo
         runs-on: ubuntu-latest
-        group: context-demo
+        strategy:
           max-parallel: 1
         timeout-minutes: 10
         steps:
