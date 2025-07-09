@@ -1,0 +1,45 @@
+# step level container
+
+name: 14-containers-in-wf
+on:
+  push:
+jobs:
+  example_job-01:
+    runs-on: ubuntu-latest
+    container:
+        image: python:3.10
+    steps:
+      - name: check out the code
+        uses: actions/checkout@v3
+        
+      - name: Run a one-line script
+        run: |
+            echo "Hello, World!"
+            python --version
+    
+      - name: run python code in a container
+        uses: docker://ubuntu:latest
+        with:
+          entrypoint: bash
+          run: |
+             ls -ltra
+             
+  example_job-02:
+    runs-on: ubuntu-latest
+    container:
+        image: python:3.10
+    steps:
+      - name: check out the code
+        uses: actions/checkout@v3
+        
+      - name: Run a one-line script
+        run: |
+            echo "Hello, World!"
+            python --version
+    
+      - name: run python code in a container
+        uses: docker://ubuntu:latest
+        with:
+          entrypoint: bash
+          run: |
+             ls -ltra             
